@@ -1,25 +1,35 @@
-Step 1:
+-- Create the database
+CREATE DATABASE employee_management;
 
-CREATE DATABASE EmployeeManagement;
-USE EmployeeManagement;
+-- Use the database
+USE employee_management;
 
-Step 2:
-CREATE TABLE Employees (
-    emp_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
+-- Create the employee table
+CREATE TABLE employee (
+    empid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    ssn VARCHAR(9) UNIQUE,
     job_title VARCHAR(50),
     division VARCHAR(50),
-    salary DECIMAL(10, 2),
-    ssn CHAR(9) UNIQUE,
-    hire_date DATE
+    salary DECIMAL(10, 2)
 );
 
-Step 3:
-CREATE TABLE PayStatements (
-    pay_id INT AUTO_INCREMENT PRIMARY KEY,
-    emp_id INT,
-    payment_date DATE,
+-- Create the pay_history table
+CREATE TABLE pay_history (
+    payid INT AUTO_INCREMENT PRIMARY KEY,
+    empid INT,
+    pay_date DATE,
     amount DECIMAL(10, 2),
-    FOREIGN KEY (emp_id) REFERENCES Employees(emp_id) ON DELETE CASCADE
+    FOREIGN KEY (empid) REFERENCES employee(empid) ON DELETE CASCADE
 );
+
+-- Insert sample data
+INSERT INTO employee (name, ssn, job_title, division, salary) VALUES
+('John Doe', '123456789', 'Software Engineer', 'IT', 80000),
+('Jane Smith', '987654321', 'Project Manager', 'IT', 95000),
+('Alice Johnson', '456789123', 'HR Specialist', 'HR', 60000);
+
+INSERT INTO pay_history (empid, pay_date, amount) VALUES
+(1, '2024-10-01', 8000),
+(2, '2024-10-01', 9500),
+(3, '2024-10-01', 6000);
