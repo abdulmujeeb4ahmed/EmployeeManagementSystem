@@ -2,9 +2,9 @@
 CREATE DATABASE EmployeeManagement;
 
 -- Use the database
-USE employee_management;
+USE EmployeeManagement;
 
--- Create the employee table
+-- Create the Employees table
 CREATE TABLE Employees (
     empid INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE Employees (
 );
 
 -- Create the PayStatements table
-CREATE TABLE pay_history (
+CREATE TABLE PayStatements (
     payid INT AUTO_INCREMENT PRIMARY KEY,
     empid INT,
     pay_date DATE,
@@ -24,12 +24,12 @@ CREATE TABLE pay_history (
 );
 
 -- Insert sample data
-INSERT INTO employee (name, ssn, job_title, division, salary) VALUES
+INSERT INTO Employees (name, ssn, job_title, division, salary) VALUES
 ('John Doe', '123456789', 'Software Engineer', 'IT', 80000),
 ('Jane Smith', '987654321', 'Project Manager', 'IT', 95000),
 ('Alice Johnson', '456789123', 'HR Specialist', 'HR', 60000);
 
-INSERT INTO pay_history (empid, pay_date, amount) VALUES
+INSERT INTO PayStatement (empid, pay_date, amount) VALUES
 (1, '2024-10-01', 8000),
 (2, '2024-10-01', 9500),
 (3, '2024-10-01', 6000);
