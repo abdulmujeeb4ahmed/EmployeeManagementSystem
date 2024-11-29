@@ -1,11 +1,11 @@
 -- Create the database
-CREATE DATABASE employee_management;
+CREATE DATABASE EmployeeManagement;
 
 -- Use the database
 USE employee_management;
 
 -- Create the employee table
-CREATE TABLE employee (
+CREATE TABLE Employees (
     empid INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     ssn VARCHAR(9) UNIQUE,
@@ -14,7 +14,7 @@ CREATE TABLE employee (
     salary DECIMAL(10, 2)
 );
 
--- Create the pay_history table
+-- Create the PayStatements table
 CREATE TABLE pay_history (
     payid INT AUTO_INCREMENT PRIMARY KEY,
     empid INT,
