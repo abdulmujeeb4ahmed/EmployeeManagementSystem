@@ -1,0 +1,25 @@
+Step 1:
+
+CREATE DATABASE EmployeeManagement;
+USE EmployeeManagement;
+
+Step 2:
+CREATE TABLE Employees (
+    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    job_title VARCHAR(50),
+    division VARCHAR(50),
+    salary DECIMAL(10, 2),
+    ssn CHAR(9) UNIQUE,
+    hire_date DATE
+);
+
+Step 3:
+CREATE TABLE PayStatements (
+    pay_id INT AUTO_INCREMENT PRIMARY KEY,
+    emp_id INT,
+    payment_date DATE,
+    amount DECIMAL(10, 2),
+    FOREIGN KEY (emp_id) REFERENCES Employees(emp_id) ON DELETE CASCADE
+);
