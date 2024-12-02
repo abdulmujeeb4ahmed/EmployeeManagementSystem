@@ -55,7 +55,6 @@ public class ConsoleUI {
         System.out.println("3. Total Pay for Month by Division");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
 
         switch (choice) {
             case 1:
