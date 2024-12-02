@@ -43,11 +43,14 @@ public class EmployeeDAO {
     }
 
     public void addEmployee(Employee employee) {
-        String sql = "INSERT INTO employees (name, job_title) VALUES (?, ?)";
+        String sql = "INSERT INTO employees (name, ssn, job_title, division, salary) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, employee.getName());
-            stmt.setString(2, employee.getJobTitle());
+            stmt.setString(2, employee.getSsn());
+            stmt.setString(3, employee.getJobTitle());
+            stmt.setString(4, employee.getDivision());
+            stmt.setDouble(5, employee.getSalary());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

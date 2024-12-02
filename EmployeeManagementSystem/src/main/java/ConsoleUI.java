@@ -82,12 +82,22 @@ public class ConsoleUI {
     private static void addEmployee() {
         System.out.print("Enter employee name: ");
         String name = scanner.nextLine();
+        System.out.print("Enter employee SSN: ");
+        String ssn = scanner.nextLine();
         System.out.print("Enter employee job title: ");
         String jobTitle = scanner.nextLine();
+        System.out.print("Enter employee division: ");
+        String division = scanner.nextLine();
+        System.out.print("Enter employee salary: ");
+        double salary = scanner.nextDouble();
+        scanner.nextLine();  // Consume newline
 
         Employee employee = new Employee();
         employee.setName(name);
+        employee.setSsn(ssn);
         employee.setJobTitle(jobTitle);
+        employee.setDivision(division);
+        employee.setSalary(salary);
 
         employeeDAO.addEmployee(employee);
         System.out.println("Employee added successfully.");
@@ -108,18 +118,6 @@ public class ConsoleUI {
         }
     }
 
-    private static void searchEmployeeById() {
-        System.out.print("Enter employee ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
-
-        Employee employee = EmployeeDAO.getEmployeeById(id);
-        if (employee != null) {
-            System.out.println("Employee found: " + employee.getName() + " - " + employee.getJobTitle());
-        } else {
-            System.out.println("Employee not found.");
-        }
-    }
 
     private static void searchEmployeeBySsn() {
         System.out.print("Enter employee SSN: ");
