@@ -25,6 +25,7 @@ public class EmployeeDAO {
         }
         return employees;
     }
+
     public void updateEmployee(Employee employee) {
         String sql = "UPDATE employees SET name = ?, job_title = ?, ssn = ?, division = ?, salary = ? WHERE empid = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -149,15 +150,13 @@ public class EmployeeDAO {
         return employees;
     }
 
-    public double getTotalPayForMonthByJobTitle(String jobTitle, int month, int year) {
+    public double getTotalPayByJobTitle(String jobTitle) {
         String sql = "SELECT SUM(p.amount) FROM PayStatements p " +
                 "JOIN Employees e ON p.empid = e.empid " +
-                "WHERE e.job_title = ? AND MONTH(p.pay_date) = ? AND YEAR(p.pay_date) = ?";
+                "WHERE e.job_title = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, jobTitle);
-            stmt.setInt(2, month);
-            stmt.setInt(3, year);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getDouble(1);
@@ -169,15 +168,13 @@ public class EmployeeDAO {
         return 0;
     }
 
-    public double getTotalPayForMonthByDivision(String division, int month, int year) {
+    public double getTotalPayByDivision(String division) {
         String sql = "SELECT SUM(p.amount) FROM PayStatements p " +
                 "JOIN Employees e ON p.empid = e.empid " +
-                "WHERE e.division = ? AND MONTH(p.pay_date) = ? AND YEAR(p.pay_date) = ?";
+                "WHERE e.division = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, division);
-            stmt.setInt(2, month);
-            stmt.setInt(3, year);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getDouble(1);
@@ -189,5 +186,19 @@ public class EmployeeDAO {
         return 0;
     }
 
+    public void updateSalaryByPercentage(double percentage, double minSalary, double maxSalary) {
+        String sql = "UPDATE Employees SET salary = salary + (salary * ? / 100) " +
+                "WHERE salary >= ? AND salary < ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setDouble(1, percentage);
+            stmt.setDouble(2, minSalary);
+            stmt.setDouble(3, maxSalary);
+            int rowsUpdated = stmt.executeUpdate();
+            System.out.println("Updated salaries for " + rowsUpdated + " employees.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

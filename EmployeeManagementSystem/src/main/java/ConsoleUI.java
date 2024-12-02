@@ -14,7 +14,8 @@ public class ConsoleUI {
             System.out.println("3. Search Employee by Name");
             System.out.println("4. Update Employee");
             System.out.println("5. Generate Reports");
-            System.out.println("6. Exit");
+            System.out.println("6. Update Salary by Percentage");
+            System.out.println("7. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -36,6 +37,9 @@ public class ConsoleUI {
                     generateReports();
                     break;
                 case 6:
+                    updateSalaryByPercentage();
+                    break;
+                case 7:
                     System.out.println("Exiting...");
                     return;
                 default:
@@ -55,27 +59,20 @@ public class ConsoleUI {
 
         switch (choice) {
             case 1:
-                reportGenerator.generateFullTimeEmployeeReport();
+                System.out.print("Enter employee name: ");
+                String employeeName = scanner.nextLine();
+                reportGenerator.generateFullTimeEmployeeReport(employeeName);
                 break;
             case 2:
                 System.out.print("Enter job title: ");
                 String jobTitle = scanner.nextLine();
-                System.out.print("Enter month (1-12): ");
-                int month = scanner.nextInt();
-                System.out.print("Enter year: ");
-                int year = scanner.nextInt();
                 scanner.nextLine();  // Consume newline
-                reportGenerator.generateTotalPayForMonthByJobTitle(jobTitle, month, year);
+                reportGenerator.generateTotalPayByJobTitle(jobTitle);
                 break;
             case 3:
                 System.out.print("Enter division: ");
                 String division = scanner.nextLine();
-                System.out.print("Enter month (1-12): ");
-                int monthDiv = scanner.nextInt();
-                System.out.print("Enter year: ");
-                int yearDiv = scanner.nextInt();
-                scanner.nextLine();  // Consume newline
-                reportGenerator.generateTotalPayForMonthByDivision(division, monthDiv, yearDiv);
+                reportGenerator.generateTotalPayByDivision(division);
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -134,6 +131,18 @@ public class ConsoleUI {
         } else {
             System.out.println("Employee not found.");
         }
+    }
+
+    private static void updateSalaryByPercentage() {
+        System.out.print("Enter percentage increase: ");
+        double percentage = scanner.nextDouble();
+        System.out.print("Enter minimum salary: ");
+        double minSalary = scanner.nextDouble();
+        System.out.print("Enter maximum salary: ");
+        double maxSalary = scanner.nextDouble();
+        scanner.nextLine();  // Consume newline
+
+        employeeDAO.updateSalaryByPercentage(percentage, minSalary, maxSalary);
     }
 
     private static void updateEmployee() {
