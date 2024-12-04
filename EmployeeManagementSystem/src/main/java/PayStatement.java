@@ -6,7 +6,7 @@ public class PayStatement {
 
     public PayStatement(Date payDate, double amount) {
         this.payDate = payDate;
-        this.amount += amount;
+        this.amount = amount;
     }
 
     public Date getPayDate() {

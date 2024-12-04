@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ReportGenerator {
@@ -9,7 +13,6 @@ public class ReportGenerator {
             System.out.println("No employees found with the name: " + employeeName);
             return;
         }
-
         for (Employee employee : employees) {
             System.out.println("Employee Information:");
             System.out.println("Name: " + employee.getName());
@@ -25,15 +28,18 @@ public class ReportGenerator {
                 totalSalary += payStatement.getAmount();
             }
             System.out.println("Total Salary: " + totalSalary);
+            System.out.println();
         }
     }
+
     public void generateTotalPayByJobTitle(String jobTitle) {
         double totalPay = employeeDAO.getTotalPayByJobTitle(jobTitle);
         System.out.println("Total Pay for " + jobTitle + ": " + totalPay);
     }
 
-    public void generateTotalPayByDivision(String division) {
-        double totalPay = employeeDAO.getTotalPayByDivision(division);
-        System.out.println("Total Pay for " + division + ": " + totalPay);
+    public void generateTotalPayByDivision(String divisionName) {
+        double totalPay = employeeDAO.getTotalPayByDivision(divisionName);
+        System.out.println("Total Salary for " + divisionName + " Division: " + totalPay);
     }
+
 }

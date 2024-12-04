@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,11 +55,11 @@ public class ConsoleUI {
     private static void generateReports() {
         System.out.println("Generate Reports");
         System.out.println("1. Full-time Employee Information with Pay Statement History");
-        System.out.println("2. Total Pay for Month by Job Title");
-        System.out.println("3. Total Pay for Month by Division");
+        System.out.println("2. Total Salary by Job Title");
+        System.out.println("3. Total Salary by Division");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-
+        scanner.nextLine();  // Consume newline
         switch (choice) {
             case 1:
                 System.out.print("Enter employee name: ");
@@ -65,13 +69,12 @@ public class ConsoleUI {
             case 2:
                 System.out.print("Enter job title: ");
                 String jobTitle = scanner.nextLine();
-                scanner.nextLine();  // Consume newline
                 reportGenerator.generateTotalPayByJobTitle(jobTitle);
                 break;
             case 3:
                 System.out.print("Enter division: ");
-                String division = scanner.nextLine();
-                reportGenerator.generateTotalPayByDivision(division);
+                String divisionName = scanner.nextLine();
+                reportGenerator.generateTotalPayByDivision(divisionName);
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -116,7 +119,6 @@ public class ConsoleUI {
             System.out.println("No employees found with the name: " + name);
         }
     }
-
 
     private static void searchEmployeeBySsn() {
         System.out.print("Enter employee SSN: ");

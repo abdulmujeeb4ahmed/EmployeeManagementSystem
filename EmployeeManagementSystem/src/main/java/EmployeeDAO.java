@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO {
+    private List<Employee> employees;
+
+    public EmployeeDAO() {
+        employees = getAllEmployees();
+    }
     public static List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM Employees";
@@ -154,39 +159,49 @@ public class EmployeeDAO {
     }
 
     public double getTotalPayByJobTitle(String jobTitle) {
-        String sql = "SELECT SUM(p.amount) FROM PayStatements p " +
-                "JOIN Employees e ON p.empid = e.empid " +
-                "WHERE e.job_title = ?";
+        String sql = "SELECT SUM(salary) AS totalPay FROM Employees WHERE job_title = ?";
+        double totalPay = 0.0;
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, jobTitle);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getDouble(1);
-                }
+            System.out.println("Executing query: " + stmt); // Debug statement
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalPay = rs.getDouble("totalPay");
+            } else {
+                System.out.println("No results found for Job Title: " + jobTitle); // Debug statement
             }
         } catch (SQLException e) {
+            System.out.println("SQL Exception for Job Title: " + jobTitle);
             e.printStackTrace();
         }
-        return 0;
+
+        return totalPay;
     }
 
-    public double getTotalPayByDivision(String division) {
-        String sql = "SELECT SUM(p.amount) FROM PayStatements p " +
-                "JOIN Employees e ON p.empid = e.empid " +
-                "WHERE e.division = ?";
+    public double getTotalPayByDivision(String divisionName) {
+        String sql = "SELECT SUM(salary) AS totalPay FROM Employees WHERE division = ?";
+        double totalPay = 0.0;
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, division);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getDouble(1);
-                }
+            stmt.setString(1, divisionName);
+            System.out.println("Executing query: " + stmt); // Debug statement
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalPay = rs.getDouble("totalPay");
+            } else {
+                System.out.println("No results found for division: " + divisionName); // Debug statement
             }
         } catch (SQLException e) {
+            System.out.println("SQL Exception for division: " + divisionName);
             e.printStackTrace();
         }
-        return 0;
+
+        return totalPay;
     }
 
     public void updateSalaryByPercentage(double percentage, double minSalary, double maxSalary) {
